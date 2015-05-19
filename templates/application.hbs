@@ -1,0 +1,44 @@
+<h2 class="text-center">My Todo App</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-sm-10">
+            {{input type="text" value=todoText placeholder="Todo" class="form-control"}}
+        </div>
+        <div class="col-md-2 col-sm-2">
+           <button type="button" {{action "saveTodo"}} class="btn btn-primary">Save</button>
+        </div>
+    </div>
+        <br>
+        <br>
+
+        <ul class="list-group">
+                {{#each todo in todos}}
+              <li class="list-group-item clearfix">
+                 {{#unless todo.isEditMode}}
+                    <div {{bind-attr class=":col-md-10 todo.isCompleted:strike-out"}}>
+                    {{input type="checkbox" checked=todo.isCompleted}}
+                    <label>{{todo.todoText}}</label>
+                    </div>
+                  {{/unless}}
+
+                  {{#if todo.isEditMode}}
+                    <div class="col-md-10 col-sm-10">
+                    {{input type="text" value=todo.todoText class="form-control"
+                    }}
+                    </div>
+
+                    <div class="col-md-2 col-sm-2">
+                     <button type="button" {{action "toggleState" todo}} class="btn btn-success">Save</button>
+                    </div>
+                  {{/if}}
+                  {{#unless todo.isEditMode}}
+                  <div class="col-md-2">
+                    <button type="button" {{action "toggleState" todo}} class="btn btn-primary" {{bind-attr disabled=todo.isCompleted }}>Edit</button>
+
+                    <button type="button" {{action "deleteTodo" todo}} class="btn btn-danger">Delete</button>
+                    </div>
+                 {{/unless}}
+              </li>
+               {{/each}}
+         </ul>
+</div>
